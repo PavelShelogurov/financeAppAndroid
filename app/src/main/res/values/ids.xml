@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="earnedNamber" type="id" />
+    <item name="spentNamber" type="id" />
+    <item name="textField2" type="id" />
+    <item name="textField1" type="id" />
+</resources>

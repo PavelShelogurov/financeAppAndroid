@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Мои Финансы</string>
+    <string-array name="menu_items">
+    <item>Добавить</item>
+    <item>Статистика</item>
+    </string-array>
+    <string name="nemu_name">Меню</string>
+
+
+    <string name="additing_fragment_name">Добавить данные</string>
+    <string name="earned">Заработано</string>
+    <string name="earned_title">Заработаные стердства</string>
+    <string name="spent">Потрачено</string>
+    <string name="spent_title">Потраченые средства</string>
+
+    <string name="statistic">Сатистика</string>
+    <string name="month">Месяц</string>
+    <string name="choose_period">Выберите период</string>
+    <string name="empty_database">В приложении пока нет информации о Ваших финансах, добавте её через вкладку добавить</string>
+
+</resources>
