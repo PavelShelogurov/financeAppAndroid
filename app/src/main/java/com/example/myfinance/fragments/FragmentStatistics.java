@@ -1,8 +1,8 @@
 package com.example.myfinance.fragments;
 
+import android.app.AlertDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,10 +19,12 @@ import androidx.fragment.app.Fragment;
 import com.example.myfinance.MainActivity;
 import com.example.myfinance.R;
 import com.example.myfinance.database.DataBaseHelper;
+import com.example.myfinance.database.DataBaseSQLQuery;
+import com.example.myfinance.dialog_fragments.ErrorDialogFragment;
 import com.example.myfinance.utils.DataProvider;
-import com.example.myfinance.utils.DataStore;
+import com.example.myfinance.utils.DataStoreStatistics;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentStatistics extends Fragment {
@@ -63,17 +65,19 @@ public class FragmentStatistics extends Fragment {
         textSpent.setText(EMPTY_STRING);
 
 
-        List<DataStore> dataStoreList = searchUniqueDataStoreInBD(MainActivity.getDataBaseHelper(), MainActivity.getDataBase());
+        List<DataStoreStatistics> dataStoreStatisticsList = searchUniqueDataStoreInBD(MainActivity.getDataBaseHelper(), MainActivity.getDataBase());
         //елси dataStoreList.size()==0 то БД пустая
-        if(dataStoreList.size()==0) {
+        if(dataStoreStatisticsList.size()==0) {
+            AlertDialog dialog = ErrorDialogFragment.getAlertDialogEmptyDB(getActivity());
+            dialog.show();
             //если база данных пустая
-            textEarned.setText(R.string.empty_database);
+            textEarned.setText(R.string.error_empty_data_base);
 
         } else{
             //создаём меню выбора месяцев
-            String[] menuItems = new String[dataStoreList.size()];
+            String[] menuItems = new String[dataStoreStatisticsList.size()];
             for (int i = 0; i < menuItems.length; i++) {
-                menuItems[i] = dataStoreList.get(i).getDate();
+                menuItems[i] = dataStoreStatisticsList.get(i).getDate();
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.list_item, menuItems);
@@ -88,8 +92,8 @@ public class FragmentStatistics extends Fragment {
                     rubleSpent.setImageResource(R.drawable.ruble);
 
 
-                    textEarnedField.setText(String.valueOf(dataStoreList.get(position).getEarned()));
-                    textSpentField.setText(String.valueOf(dataStoreList.get(position).getSpent()));
+                    textEarnedField.setText(String.valueOf(dataStoreStatisticsList.get(position).getEarned()));
+                    textSpentField.setText(String.valueOf(dataStoreStatisticsList.get(position).getSpent()));
                 }
             });
 
@@ -99,7 +103,6 @@ public class FragmentStatistics extends Fragment {
 
     }
 
-    //по возможности упростить этот метод для лучшей читаемости
     //метод возвращиюий сумму трат или заработка за определённый месяц и определённый год
 
     /**
@@ -141,7 +144,7 @@ public class FragmentStatistics extends Fragment {
     }
 
     //метод который ищет в базе данный сумму затрат и зароботка для кажого месяца в каждом году и возвращает это в виде объектов DataStore, способных всё это хранить
-    private List<DataStore> searchUniqueDataStoreInBD(DataBaseHelper dataBaseHelper, SQLiteDatabase dataBase) {
+    private List<DataStoreStatistics> searchUniqueDataStoreInBD(DataBaseHelper dataBaseHelper, SQLiteDatabase dataBase) {
         final String MIN = "MIN";
         final String MAX = "MAX";
 
@@ -154,31 +157,34 @@ public class FragmentStatistics extends Fragment {
         //текущий год будет максимальным в базе данных
         int currentYear = dataProvider.getYear();
         //поиск минимального года в базе данных
-        int minYearInDB = searchMinOrMaxIntValueOfColumnInDB(MIN, DataBaseHelper.TABLE_MAIN, DataBaseHelper.COLUMN_YEAR, null, dataBase);
+        int minYearInDB = DataBaseSQLQuery.searchMinOrMaxIntValueOfColumnInDB(MIN, DataBaseHelper.TABLE_MAIN, DataBaseHelper.COLUMN_YEAR, null, dataBase);
 
-        List<DataStore> dataStore = new LinkedList<>();
+        List<DataStoreStatistics> dataStoreStatistics = new ArrayList<>();
         //переменная minYearInDB может равняться нулю, если от базы данных пришёл пустой ответ
         //значит БД пустая и только завтель ещё не пользовался приложением
         if(minYearInDB!=0) {
             for (int year = currentYear; year >= minYearInDB; year--) {
                 String where = DataBaseHelper.COLUMN_YEAR + " = " + year;
-                int maxMonth = searchMinOrMaxIntValueOfColumnInDB(MAX, DataBaseHelper.TABLE_MAIN, DataBaseHelper.COLUMN_MONTH, where, dataBase);
-                int minMonth = searchMinOrMaxIntValueOfColumnInDB(MIN, DataBaseHelper.TABLE_MAIN, DataBaseHelper.COLUMN_MONTH, where, dataBase);
+                int maxMonth = DataBaseSQLQuery.searchMinOrMaxIntValueOfColumnInDB(MAX, DataBaseHelper.TABLE_MAIN, DataBaseHelper.COLUMN_MONTH, where, dataBase);
+                int minMonth = DataBaseSQLQuery.searchMinOrMaxIntValueOfColumnInDB(MIN, DataBaseHelper.TABLE_MAIN, DataBaseHelper.COLUMN_MONTH, where, dataBase);
                 for (int month = maxMonth; month >= minMonth; month--) {
                     int earnedAmount = getEarnedOrSpentAmount(month, year, DataBaseHelper.COLUMN_EARNED, dataBaseHelper, dataBase);
                     int spentAmount = getEarnedOrSpentAmount(month, year, DataBaseHelper.COLUMN_SPENT, dataBaseHelper, dataBase);
-                    dataStore.add(new DataStore(earnedAmount, spentAmount, month, year));
+                    dataStoreStatistics.add(new DataStoreStatistics(earnedAmount, spentAmount, month, year));
                 }
             }
         }
 
-        return dataStore;
+        return dataStoreStatistics;
     }
+    /*
     //метод который ищет максимальный или минимальный элемент в определённом столбце
     private int searchMinOrMaxIntValueOfColumnInDB (String minOrMax, String tableName, String columnName, String where, SQLiteDatabase database){
         Cursor cursor = database.query(tableName, new String[] {minOrMax + " (" + columnName + ")"}, where, null, null, null, null);
         cursor.moveToFirst();
         return cursor.getInt(cursor.getColumnIndex(minOrMax + " (" + columnName + ")"));
     }
+
+     */
 
 }

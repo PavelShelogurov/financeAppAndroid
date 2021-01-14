@@ -3,6 +3,7 @@
     <string-array name="menu_items">
     <item>Добавить</item>
     <item>Статистика</item>
+    <item>Детализация расходов</item>
     </string-array>
     <string name="nemu_name">Меню</string>
 
@@ -11,11 +12,18 @@
     <string name="earned">Заработано</string>
     <string name="earned_title">Заработаные стердства</string>
     <string name="spent">Потрачено</string>
+    <string name="spent_comment">Коментарий к тратам</string>
     <string name="spent_title">Потраченые средства</string>
+    <string name="error_title">Ошибочное действие</string>
+    <string name="error_full_spent_comment">Вы ввели комментарий к тратам, но не ввели размер трат или ввели ноль</string>
 
     <string name="statistic">Сатистика</string>
     <string name="month">Месяц</string>
     <string name="choose_period">Выберите период</string>
-    <string name="empty_database">В приложении пока нет информации о Ваших финансах, добавте её через вкладку добавить</string>
+    <string name="attention">Внимание</string>
+    <string name="error_empty_data_base">У приложения ещё нет информации о Ваших финансах. Добавьте данные во вкладке "Добавить"</string>
+
+    <string name="detailing">Детализация</string>
+
 
 </resources>

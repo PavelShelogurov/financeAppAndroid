@@ -15,16 +15,7 @@
         android:textColor="@color/color5"
         android:textSize="25dp"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/earned_title"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textField1"
         android:layout_width="match_parent"
@@ -52,16 +43,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/spent_title"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textField2"
         android:layout_width="match_parent"
@@ -87,6 +69,33 @@
             android:inputType="number"
             />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textField3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/spent_comment"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:boxCornerRadiusTopStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxBackgroundColor="@color/white"
+        app:startIconDrawable="@drawable/ic_baseline_text_snippet_24"
+        app:endIconDrawable="@drawable/ic_baseline_clear_24"
+        app:endIconMode="clear_text"
+        app:boxStrokeColor="@color/color4"
+        app:hintTextColor="@color/color4"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_spent_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 
     <LinearLayout

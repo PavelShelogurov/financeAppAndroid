@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"/>
+    
+    <TextView
+        android:id="@+id/detailing_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Дата"
+        android:textSize="14dp"
+        android:textColor="@color/color5"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id="@+id/detailing_spent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сумма трат"
+        android:textSize="30dp"
+        android:textColor="@color/red"
+        />
+    <TextView
+        android:id="@+id/detailing_spent_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Коментарий к тратам"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        />
+
+</LinearLayout>

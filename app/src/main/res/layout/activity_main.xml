@@ -19,7 +19,7 @@
         app:front_layout="@id/includedFront"
         app:back_layout="@id/includedBack"
         app:toolbarId="@id/toolbar"
-        app:peekHeight="80dp"
+        app:peekHeight="60dp"
         app:front_header_radius="30dp"
         app:disable_when_open="false"
         app:menuDrawable="@drawable/ic_baseline_menu_24"

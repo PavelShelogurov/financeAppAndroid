@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.myfinance.database.DataBaseHelper;
 import com.example.myfinance.fragments.FragmentAdditing;
+import com.example.myfinance.fragments.FragmentDetailingOfExpense;
 import com.example.myfinance.fragments.FragmentStatistics;
 import com.google.android.material.textfield.TextInputEditText;
 import com.roacult.backdrop.BackdropLayout;
@@ -29,6 +30,7 @@ import com.roacult.backdrop.BackdropLayout;
 public class MainActivity extends AppCompatActivity {
     private static final int ADD_ITEM_MENU = 0;
     private static final int STATISTICS_ITEM_MENU = 1;
+    private static final int DETAILING_OF_EXPENSE = 2;
 
     BackdropLayout backdropLayout;
     ListView listView;
@@ -49,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
         backdropLayout = findViewById(R.id.container);
         front_layout = backdropLayout.getChildAt(0);
         front_layout = backdropLayout.getChildAt(1);
-
+        //устраняет возможность нажатия через поднимающуюся шторку
+        front_layout.setClickable(true);
 
         String[] menu_item = getResources().getStringArray(R.array.menu_items);
         listView = findViewById(R.id.list_item_menu);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.costum_item_element, menu_item);
+
         MyAdapterForMenu adapterForMenu = new MyAdapterForMenu(this, menu_item);
         listView.setAdapter(adapterForMenu);
 
@@ -74,11 +77,18 @@ public class MainActivity extends AppCompatActivity {
                                 .commit();
                         backdropLayout.close();
                         break;
-
+                    case DETAILING_OF_EXPENSE:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container_view, FragmentDetailingOfExpense.class, null)
+                                .commit();
+                        backdropLayout.close();
+                        break;
                 }
 
             }
         });
+
+
     }
 
 
