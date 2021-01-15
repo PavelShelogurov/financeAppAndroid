@@ -177,14 +177,5 @@ public class FragmentStatistics extends Fragment {
 
         return dataStoreStatistics;
     }
-    /*
-    //метод который ищет максимальный или минимальный элемент в определённом столбце
-    private int searchMinOrMaxIntValueOfColumnInDB (String minOrMax, String tableName, String columnName, String where, SQLiteDatabase database){
-        Cursor cursor = database.query(tableName, new String[] {minOrMax + " (" + columnName + ")"}, where, null, null, null, null);
-        cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndex(minOrMax + " (" + columnName + ")"));
-    }
-
-     */
-
+   
 }
