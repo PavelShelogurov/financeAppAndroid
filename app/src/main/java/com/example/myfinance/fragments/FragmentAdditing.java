@@ -84,6 +84,7 @@ public class FragmentAdditing extends Fragment {
                     Log.d("mas", "Запись добавлена в базу данных. Заработано - " + earned + " Потрачено " + spent + " Комментарий к тратам: " + spentComment);
                     Log.d("mas", "Снегирировалась дата День " + dataProvider.getDay() + " Месяц " + dataProvider.getMonth() + " Год " + dataProvider.getYear());
                 } catch (IllegalArgumentException e){
+                    Log.d("mas", "earned = " + earned + " spent = " + spent + " spentComment =" + spentComment + "|");
                     Log.d("mas", "ОШИБКА! Не добавлена трата, но добавлена подпить к трате!");
                     AlertDialog dialog = ErrorDialogFragment.getAlertDialogNotSpentHasSpentComment(getActivity());
                     dialog.show();
@@ -111,7 +112,7 @@ public class FragmentAdditing extends Fragment {
 
     private void addDataToDataBase(int earned, int spent, String spentComment, int day, int month, int year, DataBaseHelper dataBaseHelper, SQLiteDatabase dataBase) {
         //если пользователь не ввёл траты а комментарий к тартам ввёл - это ошибка - выбросить исключение
-        if (spent == 0 && spentComment != null) {
+        if (spent == 0 && !spentComment.equals(EMPTY_STRING)) {
             throw new IllegalArgumentException("Addition Spent Comment without spent number");
         } else {
             //DataBaseHelper dataBaseHelper1 = new DataBaseHelper(getContext());
